@@ -1,0 +1,53 @@
+#+title: Introduction
+#+OPTIONS: tex:t
+
+* Basic Notations
+
+- $R$ *= Response Time* [in seconds], where $R = W + \mu^{-1}$ (Waiting time +
+  Service time)
+- $\mu^{-1}$ *= Service Time* [in seconds] (time interval in which the server
+  starts to serve)
+- $W$ *= Waiting Time* [in seconds] (time interval in which the job waits in the
+  queue)
+- $\lambda$ *= Arrival Rate* [jobs/second] (this is the rate at which customers
+  arrive for service)
+- $X$ *= Throughput* [jobs/second] (the amount of jobs the system is serving at
+  a specific moment, it depends on the traffic)
+- $U$ *= Utilization* of the server $[0, 1]$ (the portion of resources actually
+  in use)
+- $N$ *= Occupancy* of the server (total jobs in a system), where $N =
+  N_{s}+N_{w}$ (sum between jobs in service and jobs waiting in the queue)
+- $P$ *= Power consumption* $[W]$
+
+* Little's Law
+It shows how the three major queuing metrics—throughput, response time, and
+queuing length—correlate with each other. This is a generic law that has no
+assumptions attached to it other than the equilibrium condition, which means
+that no customers are created or lost in the system. Little’s law has been
+widely applied to solving software performance and scalability problems.
+
+#+begin_quote
+*Little's Law*: the number of jobs (on average), both waiting for and receiving
+service, is equal to the product of throughput and response time.
+$$\overline{N}=X*\overline{R}$$ This relation holds under the condition of
+system stability, i.e. $\lambda < \mu$.
+
+Since response time can be expressed as $R=W+\mu^{-1}$ in general, where W
+represents wait time and S service time, we can further decompose the equation
+into: $$N_{waiting}=X*W$$ $$N_{serviced}=X*\mu^{-1}$$
+#+end_quote
+
+* Utilization Law
+#+begin_quote
+Utilization Law for single-server systems:
+$$U=\frac{\lambda}{\mu}=\frac{X}{\mu}$$
+#+end_quote
+
+* PASTA property
+#+begin_quote
+The PASTA property refers to the expected state of a queueing system as seen by
+an arrival from a Poisson process. *An arrival from a Poisson process observes the
+system as if it was arriving at a random moment in time*. Therefore, the expected
+value of any parameter of the queue at the instant of a Poisson arrival is
+simply the long-run average value of that parameter.
+#+end_quote

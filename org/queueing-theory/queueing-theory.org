@@ -1,0 +1,59 @@
+#+title: Queueing Theory
+
+Queueing theory is the theory behind what happens when you have lots of jobs,
+scarce resources, and subsequently long queues and delays. It is literally the
+“theory of queues”: what makes queues appear and how to make them go away.
+
+The goals of a queueing theorist are twofold. The first is predicting the *system performance*.
+Although prediction is important, an even more important goal is
+finding a superior *system design* to improve performance.
+
+* Terminologies
+
+#+begin_quote
+*System capacity*: it represents the maximum number of jobs the system can
+ contain (both waiting and serviced).
+#+end_quote
+
+#+begin_quote
+*Population size*: it represents the number of potential jobs that can access
+ the system, i.e. they are willing to enter the system.
+#+end_quote
+
+#+begin_quote
+*Service discipline*: policy through which the jobs are served.
+1) *FCFS* (First Come First Serve);
+2) *LCFS* (Last Come First Serve);
+3) *FCFS/LCFS with preemption*: this feature allows to remove the job from the
+   service and putting it back to the queue;
+4) *FCFS/LCFS with preemption and resume*: same as previous, but it resumes the
+   state of the job (it doesn't waste the work done);
+5) *PS* (Processor Sharing): Simplified Round-Robin;
+6) *IS* (Delay Center or Infinite Services);
+7) *SRPT* (Shortest Remaining Processing Time).
+#+end_quote
+
+#+begin_quote
+*Work-conserving discipline*: a queueing discipline is work-conserving if:
+1) It never leaves idle a server that is allowed to work;
+2) It never wastes the work done on a job.
+#+end_quote
+
+* Kendall notation
+It's a fast way to represent queueing systems.
+
+#+begin_quote
+$A/S/m/B/K/SD$
+
+- $A$: inter-arrival distribution
+- $S$: service distribution
+- $m$: number of servers
+- $B$: system capacity (default: $\infty$)
+- $K$: population size (default: $\infty$)
+- $SD$: service discipline (default: FCFS)
+#+end_quote
+
+Abbreviations for $A$ and $M$:
+- $M$: exponential (Poisson);
+- $D$: deterministic;
+- $G$: general distribution.

@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Queueing Theory</title>
+<!-- 2024-03-20 Wed 17:38 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Pietro Visconti">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script>
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: "center",
+  displayIndent: "2em",
+  messageStyle: "none",
+  "HTML-CSS": {
+    scale: 100,
+    styles: {
+      ".MathJax_Display": {
+        "font-size": "100%"
+      }
+    }
+  },
+  "SVG": {
+    scale: 100,
+    styles: {
+      ".MathJax_SVG_Display": {
+        "font-size": "100%",
+        "margin-left": "-2.281em"
+      }
+    }
+  }
+});
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"></script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Terminologies</a></li>
+<li><a href="#sec-2">2. Kendall notation</a></li>
+</ul>
+</div>
+</nav>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Queueing Theory</h1>
+<p>
+Queueing theory is the theory behind what happens when you have lots of jobs,
+scarce resources, and subsequently long queues and delays. It is literally the
+“theory of queues”: what makes queues appear and how to make them go away.
+</p>
+
+<p>
+The goals of a queueing theorist are twofold. The first is predicting the <b>system performance</b>.
+Although prediction is important, an even more important goal is
+finding a superior <b>system design</b> to improve performance.
+</p>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Terminologies</h2>
+<div class="outline-text-2" id="text-1">
+<blockquote>
+<p>
+<b>System capacity</b>: it represents the maximum number of jobs the system can
+ contain (both waiting and serviced).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>Population size</b>: it represents the number of potential jobs that can access
+ the system, i.e. they are willing to enter the system.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>Service discipline</b>: policy through which the jobs are served.
+</p>
+<ol class="org-ol">
+<li><b>FCFS</b> (First Come First Serve);
+</li>
+<li><b>LCFS</b> (Last Come First Serve);
+</li>
+<li><b>FCFS/LCFS with preemption</b>: this feature allows to remove the job from the
+service and putting it back to the queue;
+</li>
+<li><b>FCFS/LCFS with preemption and resume</b>: same as previous, but it resumes the
+state of the job (it doesn&rsquo;t waste the work done);
+</li>
+<li><b>PS</b> (Processor Sharing): Simplified Round-Robin;
+</li>
+<li><b>IS</b> (Delay Center or Infinite Services);
+</li>
+<li><b>SRPT</b> (Shortest Remaining Processing Time).
+</li>
+</ol>
+</blockquote>
+
+<blockquote>
+<p>
+<b>Work-conserving discipline</b>: a queueing discipline is work-conserving if:
+</p>
+<ol class="org-ol">
+<li>It never leaves idle a server that is allowed to work;
+</li>
+<li>It never wastes the work done on a job.
+</li>
+</ol>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Kendall notation</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+It&rsquo;s a fast way to represent queueing systems.
+</p>
+
+<blockquote>
+<p>
+\(A/S/m/B/K/SD\)
+</p>
+
+<ul class="org-ul">
+<li>\(A\): inter-arrival distribution
+</li>
+<li>\(S\): service distribution
+</li>
+<li>\(m\): number of servers
+</li>
+<li>\(B\): system capacity (default: \(\infty\))
+</li>
+<li>\(K\): population size (default: \(\infty\))
+</li>
+<li>\(SD\): service discipline (default: FCFS)
+</li>
+</ul>
+</blockquote>
+
+<p>
+Abbreviations for \(A\) and \(M\):
+</p>
+<ul class="org-ul">
+<li>\(M\): exponential (Poisson);
+</li>
+<li>\(D\): deterministic;
+</li>
+<li>\(G\): general distribution.
+</li>
+</ul>
+</div>
+</div>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Pietro Visconti</p>
+<p class="date">Created: 2024-03-20 Wed 17:38</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="http://orgmode.org">Org-mode</a> 9.7)</p>
+</div>
+</footer>
+</body>
+</html>
