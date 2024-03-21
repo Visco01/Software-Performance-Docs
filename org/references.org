@@ -1,0 +1,7 @@
+#+title: References
+
+Here's the list of references used into these notes
+- Personal notes
+- Material given by our teacher of the course
+- Software Performance and Scalability -- Liu Henry H -- 2009 -- Wiley-IEEE Computer Society Press
+- Performance modeling and design of computer systems- -- Harchol-Balter Mor -- Rep 2014 -- Cambridge University Press
