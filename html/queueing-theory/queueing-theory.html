@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>Queueing Theory</title>
-<!-- 2024-03-20 Wed 17:38 -->
+<!-- 2024-03-21 Thu 11:01 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -223,6 +223,14 @@ MathJax.Hub.Config({
 <ul class="nav">
 <li><a href="#sec-1">1. Terminologies</a></li>
 <li><a href="#sec-2">2. Kendall notation</a></li>
+<li><a href="#sec-3">3. M/M/1 queueing system</a>
+<ul class="nav">
+<li><a href="#sec-3-1">3.1. Load factor</a></li>
+<li><a href="#sec-3-2">3.2. Expected number of customers</a></li>
+<li><a href="#sec-3-3">3.3. Expected response time</a></li>
+<li><a href="#sec-3-4">3.4. M/M/1 charts</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </nav>
@@ -234,9 +242,9 @@ scarce resources, and subsequently long queues and delays. It is literally the
 </p>
 
 <p>
-The goals of a queueing theorist are twofold. The first is predicting the <b>system performance</b>.
-Although prediction is important, an even more important goal is
-finding a superior <b>system design</b> to improve performance.
+The goals of a queueing theorist are twofold. The first is predicting the
+<b>system performance</b>. Although prediction is important, an even more important
+goal is finding a superior <b>system design</b> to improve performance.
 </p>
 <div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> Terminologies</h2>
@@ -333,10 +341,93 @@ Abbreviations for \(A\) and \(M\):
 </ul>
 </div>
 </div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> M/M/1 queueing system</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+The M/M/1 open model begins with the following assumptions:
+</p>
+<ul class="org-ul">
+<li>An average arrival rate \(\lambda\) is known;
+</li>
+<li>The system is running under an stable condition, i.e. \(\lambda < \mu\);
+</li>
+</ul>
+
+<p>
+<b>M/M/1</b> terminology indicates these features:
+</p>
+<ul class="org-ul">
+<li>Exponential independent inter-arrival times (Poisson arrivals);
+</li>
+<li>Exponential independent service times;
+</li>
+<li>Single server, infinite buffer, FCFS discipline.
+</li>
+</ul>
+</div>
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Load factor</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+The load factor is defined as follows: \[\rho=\frac{\lambda}{\mu}\] and it
+represents the ratio between the arrival rate and the service rate.
+</p>
+
+<p>
+We already observed that the queue is stable, i.e. \(\rho < 1\).
+</p>
+
+<blockquote>
+<p>
+The steady-state probability of observing n jobs in the queue has a <b>geometric
+distribution</b> with ratio \(\rho\).
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Expected number of customers</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+We have that \[\overline{N}=\frac{\rho}{1-\rho}\]
+And the steady-state probability to find the server busy (i.e. number of customers in the service room) is \[U=\rho=E[N_{s}]\]
+Recall that \(E[N]=E[N_{s}]+E[N_{q}]\), therefore \[E[N_{q}]=\frac{\rho}{1-\rho}-\rho=\frac{\rho^{2}}{1-\rho}\]
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Expected response time</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+In stability conditions, we have \(X = \lambda\).
+We can compute the expected response time by Little’s theorem: \[\overline{R}=E[R]=\frac{\overline{N}}{X}=\frac{1}{\mu-\lambda}\]
+We know that \(E[S]=\mu^{-1}=\frac{1}{\mu}\), therefore \[E[W]=E[R]-E[S]=\frac{1}{\mu-\lambda}-\frac{1}{\mu}=\frac{\lambda}{\mu(\mu-\lambda)}\]
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> M/M/1 charts</h3>
+<div class="outline-text-3" id="text-3-4">
+
+<figure>
+<p><img src="../../resources/mm1-ncustomers.png" class="img-responsive" alt="mm1-ncustomers.png">
+</p>
+</figure>
+
+
+<figure>
+<p><img src="../../resources/mm1-response-time.png" class="img-responsive" alt="mm1-response-time.png">
+</p>
+<figcaption><span class="figure-number">Figure 2:</span> This chart can be subdivided in three parts: Low Load, Moderate Load, Heavy Load. The last one MUST be avoided due to the exponential response time based on little variations of &lambda;.</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Pietro Visconti</p>
-<p class="date">Created: 2024-03-20 Wed 17:38</p>
+<p class="date">Created: 2024-03-21 Thu 11:01</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="http://orgmode.org">Org-mode</a> 9.7)</p>
 </div>
 </footer>

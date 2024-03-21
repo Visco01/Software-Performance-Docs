@@ -4,9 +4,9 @@ Queueing theory is the theory behind what happens when you have lots of jobs,
 scarce resources, and subsequently long queues and delays. It is literally the
 “theory of queues”: what makes queues appear and how to make them go away.
 
-The goals of a queueing theorist are twofold. The first is predicting the *system performance*.
-Although prediction is important, an even more important goal is
-finding a superior *system design* to improve performance.
+The goals of a queueing theorist are twofold. The first is predicting the
+*system performance*. Although prediction is important, an even more important
+goal is finding a superior *system design* to improve performance.
 
 * Terminologies
 
@@ -57,3 +57,40 @@ Abbreviations for $A$ and $M$:
 - $M$: exponential (Poisson);
 - $D$: deterministic;
 - $G$: general distribution.
+
+* M/M/1 queueing system
+The M/M/1 open model begins with the following assumptions:
+- An average arrival rate $\lambda$ is known;
+- The system is running under an stable condition, i.e. $\lambda < \mu$;
+
+*M/M/1* terminology indicates these features:
+- Exponential independent inter-arrival times (Poisson arrivals);
+- Exponential independent service times;
+- Single server, infinite buffer, FCFS discipline.
+
+** Load factor
+The load factor is defined as follows: $$\rho=\frac{\lambda}{\mu}$$ and it
+represents the ratio between the arrival rate and the service rate.
+
+We already observed that the queue is stable, i.e. $\rho < 1$.
+
+#+begin_quote
+The steady-state probability of observing n jobs in the queue has a *geometric
+distribution* with ratio $\rho$.
+#+end_quote
+
+** Expected number of customers
+We have that $$\overline{N}=\frac{\rho}{1-\rho}$$
+And the steady-state probability to find the server busy (i.e. number of customers in the service room) is $$U=\rho=E[N_{s}]$$
+Recall that $E[N]=E[N_{s}]+E[N_{q}]$, therefore $$E[N_{q}]=\frac{\rho}{1-\rho}-\rho=\frac{\rho^{2}}{1-\rho}$$
+
+** Expected response time
+In stability conditions, we have $X = \lambda$.
+We can compute the expected response time by Little’s theorem: $$\overline{R}=E[R]=\frac{\overline{N}}{X}=\frac{1}{\mu-\lambda}$$
+We know that $E[S]=\mu^{-1}=\frac{1}{\mu}$, therefore $$E[W]=E[R]-E[S]=\frac{1}{\mu-\lambda}-\frac{1}{\mu}=\frac{\lambda}{\mu(\mu-\lambda)}$$
+
+** M/M/1 charts
+[[../../resources/mm1-ncustomers.png]]
+
+#+CAPTION: This chart can be subdivided in three parts: Low Load, Moderate Load, Heavy Load. The last one MUST be avoided due to the exponential response time based on little variations of \lambda.
+[[../../resources/mm1-response-time.png]]
