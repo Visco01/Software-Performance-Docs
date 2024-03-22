@@ -156,3 +156,21 @@ $\overline{R}$ is derived by Little's theorem as follows $$\overline{R}=E[R]=\fr
 [[../../resources/mmm-ncustomers.png]]
 
 [[../../resources/mmm-response-time.png]]
+
+* M/M/$\infty$ queueing system
+This dream situation can be modeled by a queueing system with an infinite number
+of servers, so that there is always a server to take an incoming job.
+
+The interarrival times are Exponential with rate $\lambda$, the service times are Exponential with rate $\mu$, and there are an infinite number of servers.
+
+[[../../resources/mminf-queue.png]]
+
+In this case, we denote $$\lambda(n)=\lambda$$ and $$\mu(n)=n\mu$$
+
+And finally, since we have an infinite number of server, the throughput is always $X = \lambda$, i.e. the system is always stable and the jobs don't have waiting time at all.
+
+** Expected number of customers
+$$\overline{N}=E[N]=\frac{\lambda}{\mu}$$
+
+** Expected response time
+$$\overline{R}=E[R]=\frac{1}{\mu}$$
