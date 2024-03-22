@@ -1,4 +1,6 @@
 #+title: Queueing Theory
+#+LATEX_HEADER: \usepackage{amsmath}
+#+OPTIONS: tex:mathjax
 
 Queueing theory is the theory behind what happens when you have lots of jobs,
 scarce resources, and subsequently long queues and delays. It is literally the
@@ -94,3 +96,63 @@ We know that $E[S]=\mu^{-1}=\frac{1}{\mu}$, therefore $$E[W]=E[R]-E[S]=\frac{1}{
 
 #+CAPTION: This chart can be subdivided in three parts: Low Load, Moderate Load, Heavy Load. The last one MUST be avoided due to the exponential response time based on little variations of \lambda.
 [[../../resources/mm1-response-time.png]]
+
+** Other useful relations in M/M/1
+#+begin_quote
+*Probability to find the empty queue*: $1-\frac{\lambda}{\mu}=1-\rho$
+#+end_quote
+
+#+begin_quote
+*Length of idle periods in the system*: exponentially distributed with mean
+ $\frac{1}{\lambda}$
+#+end_quote
+
+#+begin_quote
+*Average length of busy periods*: $X=\frac{1}{\mu-\lambda}$
+#+end_quote
+
+* M/M/m queueing system
+In today’s high-volume world, almost no websites, compute centers, or call
+centers consist of just a single server. Instead a “server farm” is used. The
+server farm is a collection of servers that work together to handle incoming
+requests. Each request might be routed to a different server, so that servers
+“share” the incoming load. From a practical perspective, server farms are often
+preferable to a single “super-fast” server because of their low cost (many slow
+servers are cheaper than a single fast one) and their flexibility (it is easy to
+increase/decrease capacity as needed by adding/removing servers).
+
+The first “M” indicates that we have *memoryless interarrival times*, and the
+second “M” indicates *memoryless service times*. The third field denotes that *m
+servers share a common pool* of arriving jobs. For the M/M/k system, there is no
+capacity constraint
+
+[[../../resources/mmm-queue.png]]
+
+Since the incoming stream is completely independent from the system, we denote $$\lambda(n)=\lambda$$
+and the service rate is based on the number of $n$ busy servers
+
+$$\mu(n) =
+\begin{cases}
+  n\mu & \text{n <= m} \\
+  m\mu & \text{otherwise}
+\end{cases}$$
+
+** Load factor
+In this type of queue system the load factor is defined as follows: $$\rho=\frac{\lambda}{m\mu}$$
+Therefore, the system is stable if and only if $\lambda < m\mu$
+
+** Expected number of customers
+Let $C(m,\frac{\lambda}{\mu})$ be the probability of finding all the servers busy.
+
+Assuming stability we have that $\lambda = X$ where $X$ is the throughput, and the expected number of customers is derived as follows
+
+$$\overline{N}=E[N]=\frac{\rho}{1-\rho}C(m,\frac{\lambda}{\mu})+\frac{\lambda}{\mu}$$
+
+** Expected response time
+$\overline{R}$ is derived by Little's theorem as follows $$\overline{R}=E[R]=\frac{C(m,\frac{\lambda}{\mu})}{m\mu-\lambda}+\frac{1}{\mu}$$
+
+** M/M/m charts
+
+[[../../resources/mmm-ncustomers.png]]
+
+[[../../resources/mmm-response-time.png]]
