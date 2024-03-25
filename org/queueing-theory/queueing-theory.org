@@ -285,3 +285,74 @@ independent of the size x. Remember that for non-preemptive non-size-based
 scheduling, the mean slowdown for small jobs was greater than the mean slowdown
 for large jobs. By contrast, under PS, all jobs have same slowdown. For this
 reason, people always refer to PS as *fair scheduling*.
+
+* Shortest-Remaining-Processing-Time (SRPT)
+Under SRPT, at all times the server is working on that *job with the shortest remaining
+processing time*. The SRPT policy is preemptive so that a new arrival
+will preempt the current job serving if the new arrival has a shorter remaining
+processing time.
+
+Observe that, under SRPT, once a job, j, starts running, it can only be
+preempted by a new arrival whose size is shorter than j’s remaining time. In
+particular, any jobs that are in the system with j, while j is running, will
+never run before j completes.
+
+The assumption of this class of schedulers is that *we know the service time of
+the jobs* as soon as they arrive at the system, *in advance* (not applicable in
+many contexts).
+
+At each epoch, the job with the smallest remaining processing (service) time
+will be served: in this way, small jobs overtake large jobs. This approach
+reduces the expected response time.
+
+In general, we have these relations between SRPT and PS, given the size of a
+job:
+
+$$\text{SRPT vs PS} = \begin{cases} \overline{R}^{SRPT} <= \overline{R}^{PS} &
+\text{small job size} \\ \overline{R}^{SRPT} >= \overline{R}^{PS} & \text{big
+job size} \end{cases}$$
+
+From this relation, we can define:
+#+begin_quote
+*All-can-win-theory*: given M/G/1/PS and M/G/1/SRPT queues with the same
+ parameters, if $\rho<0.5$ then, for all $x$: $$\overline{R}^{SRPT}(x) <=
+ \overline{R}^{PS}(x)$$
+
+ This statement is true *until* $\rho<=0.96$
+#+end_quote
+
+* Least Attained Service (LAS)
+#+begin_quote
+*Age based disciplines* (in general):
+- At each epoch, we take the decision on the job(s) to serve based on the amount
+  of work they have received up to that moment
+- In general we tend to favor the jobs that have received the smallest amount of
+  work: the bet is that those who have obtained a lot of work, the will ask even
+  more
+- These disciplines work well when the service times are heavily tailed
+#+end_quote
+
+LAS is a discipline is with *preemption and resume*, in which at each epoch, the
+scheduling discipline works as a PS only on the jobs that have recevied the
+least amount of service.
+
+#+begin_quote
+*Hazard rate*: if the hazard rate of a random variable is *monotonically
+ decreasing*, it means that as time passes the time to completion increases => in
+ terms of service time, it means that *if we have given a lot of service to a
+ job, this will probably need even more work (!)*
+#+end_quote
+
+LAS is the optimal scheduling discipline *if we do not know the job size in advance*
+(or its distribution) but the job size has monotonically decreasing
+hazard rate. We use it when we have *many small jobs* and a *few huge jobs* but we
+cannot say in advance who is small and who is big.
+
+** LAS implementation: PS+PS discipline
+PS+PS workflow:
+1) We maintain *two PS queues*. Queue 1 has strict priority on Queue 2;
+2) We define a *threshold T*;
+3) When a job arrives it stays in *Queue 1* until: either it finishes its job and
+   hence it leaves the queue, or *it reaches the recevied work T*. In the latter
+   case it is moved to Queue 2;
+4) If more than a job is in Queue 1, they are served in PS. Same for Queue 2.
