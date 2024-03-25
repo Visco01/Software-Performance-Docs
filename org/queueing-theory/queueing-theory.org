@@ -167,10 +167,38 @@ The interarrival times are Exponential with rate $\lambda$, the service times ar
 
 In this case, we denote $$\lambda(n)=\lambda$$ and $$\mu(n)=n\mu$$
 
-And finally, since we have an infinite number of server, the throughput is always $X = \lambda$, i.e. the system is always stable and the jobs don't have waiting time at all.
+And finally, since we have an infinite number of server, the throughput is
+always $X = \lambda$, i.e. the system is always stable and the jobs don't have
+waiting time at all.
 
 ** Expected number of customers
 $$\overline{N}=E[N]=\frac{\lambda}{\mu}$$
 
 ** Expected response time
 $$\overline{R}=E[R]=\frac{1}{\mu}$$
+
+* M/G/1 queueing system
+An M/G/1 queue consists of a single server and queue with Poisson job arrivals (it holds the PASTA property),
+where the size (a.k.a. service time) of a job has a general distribution with *mean* $\frac{1}{\mu}$ and *variance* $\sigma^{2}$ and the stability condition is $\lambda < \mu$, as usual.
+
+In the M/G/1 queue, the jobs are pushed in the waiting queue represented by an *infinite buffer*.
+
+** P-K Formula
+The formula states that the queue length (how many jobs are in the queue, waiting to be serviced?) depends not only on the ratio between
+the expected service time and the arrival rate, but also on the *variance* of the
+service time.
+
+$$E[N_{q}]=\frac{\rho^{2}+\lambda^{2}\sigma^{2}}{2(1-\rho)}$$
+
+And we denote the average waiting time as $$E[W]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu-\lambda)}$$
+
+Since the numerator contains the variance, we can conclude that the average waiting time increases proportionally to the variance, i.e. *FCFS sucks with a great variance*.
+
+** Expected number of customers
+$$\overline{N}=E[N]=\frac{\rho^{2}+\lambda^{2}\sigma^{2}}{2(1-\rho)}+\rho$$
+
+** Expected response time
+$$\overline{R}=E[R]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu - \lambda)}+\frac{1}{\mu}$$
+
+** Expected waiting time
+i.e. response time - service time: $$E[W]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu - \lambda)}$$
