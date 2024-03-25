@@ -200,8 +200,9 @@ great variance*.
 $$\overline{N}=E[N]=\frac{\rho^{2}+\lambda^{2}\sigma^{2}}{2(1-\rho)}+\rho$$
 
 ** Expected response time
+(see waiting time below)
 $$\overline{R}=E[R]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu -
-\lambda)}+\frac{1}{\mu}$$
+\lambda)}+\frac{1}{\mu}=\frac{\rho(1+CV^{2})}{2(\mu-\lambda)}+\frac{1}{\mu}$$
 
 ** Expected waiting time
 i.e. response time - service time:
