@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>Queueing Theory</title>
-<!-- 2024-03-25 Mon 10:26 -->
+<!-- 2024-03-25 Mon 11:12 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -252,6 +252,15 @@ MathJax.Hub.Config({
 <li><a href="#sec-6-2">6.2. Expected number of customers</a></li>
 <li><a href="#sec-6-3">6.3. Expected response time</a></li>
 <li><a href="#sec-6-4">6.4. Expected waiting time</a></li>
+</ul>
+</li>
+<li><a href="#sec-7">7. M/G/1/PS queueing system (Processor Sharing policy)</a>
+<ul class="nav">
+<li><a href="#sec-7-1">7.1. Characteristics</a></li>
+<li><a href="#sec-7-2">7.2. Ages of Jobs in the M/G/1/PS System</a></li>
+<li><a href="#sec-7-3">7.3. Terminologies</a></li>
+<li><a href="#sec-7-4">7.4. Expected response time</a></li>
+<li><a href="#sec-7-5">7.5. Conclusions about PS</a></li>
 </ul>
 </li>
 </ul>
@@ -609,21 +618,25 @@ waiting time at all.
 <h2 id="sec-6"><span class="section-number-2">6</span> M/G/1 queueing system</h2>
 <div class="outline-text-2" id="text-6">
 <p>
-An M/G/1 queue consists of a single server and queue with Poisson job arrivals (it holds the PASTA property),
-where the size (a.k.a. service time) of a job has a general distribution with <b>mean</b> \(\frac{1}{\mu}\) and <b>variance</b> \(\sigma^{2}\) and the stability condition is \(\lambda < \mu\), as usual.
+An M/G/1 queue consists of a single server and queue with Poisson job arrivals
+(it holds the PASTA property), where the size (a.k.a. service time) of a job has
+a general distribution with <b>mean</b> \(\frac{1}{\mu}\) and <b>variance</b> \(\sigma^{2}\)
+and the stability condition is \(\lambda < \mu\), as usual.
 </p>
 
 <p>
-In the M/G/1 queue, the jobs are pushed in the waiting queue represented by an <b>infinite buffer</b>.
+In the M/G/1 queue, the jobs are pushed in the waiting queue represented by an
+<b>infinite buffer</b>.
 </p>
 </div>
 <div id="outline-container-sec-6-1" class="outline-3">
 <h3 id="sec-6-1"><span class="section-number-3">6.1</span> P-K Formula</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
-The formula states that the queue length (how many jobs are in the queue, waiting to be serviced?) depends not only on the ratio between
-the expected service time and the arrival rate, but also on the <b>variance</b> of the
-service time.
+The formula states that the queue length (how many jobs are in the queue,
+waiting to be serviced?) depends not only on the ratio between the expected
+service time and the arrival rate, but also on the <b>variance</b> of the service
+time.
 </p>
 
 <p>
@@ -631,11 +644,14 @@ service time.
 </p>
 
 <p>
-And we denote the average waiting time as \[E[W]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu-\lambda)}\]
+And we denote the average waiting time as
+\[E[W]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu-\lambda)}\]
 </p>
 
 <p>
-Since the numerator contains the variance, we can conclude that the average waiting time increases proportionally to the variance, i.e. <b>FCFS sucks with a great variance</b>.
+Since the numerator contains the variance, we can conclude that the average
+waiting time increases proportionally to the variance, i.e. <b>FCFS sucks with a
+great variance</b>.
 </p>
 </div>
 </div>
@@ -651,7 +667,8 @@ Since the numerator contains the variance, we can conclude that the average wait
 <h3 id="sec-6-3"><span class="section-number-3">6.3</span> Expected response time</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
-\[\overline{R}=E[R]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu - \lambda)}+\frac{1}{\mu}\]
+\[\overline{R}=E[R]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu -
+\lambda)}+\frac{1}{\mu}\]
 </p>
 </div>
 </div>
@@ -659,7 +676,133 @@ Since the numerator contains the variance, we can conclude that the average wait
 <h3 id="sec-6-4"><span class="section-number-3">6.4</span> Expected waiting time</h3>
 <div class="outline-text-3" id="text-6-4">
 <p>
-i.e. response time - service time: \[E[W]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu - \lambda)}\]
+i.e. response time - service time:
+\[E[W]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu - \lambda)}\]
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> M/G/1/PS queueing system (Processor Sharing policy)</h2>
+<div class="outline-text-2" id="text-7">
+<blockquote>
+<p>
+A policy is <b>preemptive</b> if a job may be stopped partway through its execution
+and then resumed at a later point in time from the same point where it was
+stopped (this is also called preemptive-resume).
+</p>
+</blockquote>
+
+<p>
+The main problem with the M/G/1 queue is that the mean response time can be very
+high when \(\sigma^{2}\) is high (job size variability is high). Intuitively,
+short jobs queue up behind long jobs, resulting in long delays.
+<b>Processor-Sharing</b>, by contrast, <b>is not negatively affected by high job size
+variability</b>.
+</p>
+
+<p>
+When a short job arrives, it immediately time-shares with all the jobs in the
+system. It does not have to wait for long jobs to finish. PS allows short jobs
+(which require just a few quanta of service) to get out quickly. time-sharing
+the CPU might allow an increase of overall system throughput in a multi-resource
+system. Imagine, for example, a multi-resource system, including a CPU, disk,
+memory, etc. It is useful to have many jobs running simultaneously (rather than
+just one job at a time), because jobs requiring different resources can be
+overlapped to increase throughput.
+</p>
+
+<blockquote>
+<p>
+But PS is not better than FCFS for <b>every</b> arrival sequence:
+</p>
+<ul class="org-ul">
+<li>If the service time has a <b>variance smaller than the exponential distribution</b>
+with the same mean, then FCFS perfoms better than PS;
+</li>
+<li>Otherwise, PS performs better;
+</li>
+<li>If the <b>variance is not known</b>, it is better to opt for PS since it guarantees
+the performance indices of the M/M/1 queue independently of the distribution
+of the service time
+</li>
+</ul>
+</blockquote>
+</div>
+<div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Characteristics</h3>
+<div class="outline-text-3" id="text-7-1">
+<ul class="org-ul">
+<li><b>Poisson arrival process</b> with intensity \(\lambda\)
+</li>
+<li><b>General service time</b> with mean \(\mu^{-1}\)
+</li>
+<li><b>Single server</b>
+</li>
+<li>Jobs enter in service as soon as they arrive but they share the processor with
+the other job in service. In fact, each job receives the same amount of
+computational power from the processor
+</li>
+<li>The waiting time is defined as the difference between the response time and
+the service time
+</li>
+</ul>
+
+<blockquote>
+<p>
+<b>Insensitivity</b> of the M/G/1/PS queue: the performance indices depend only on
+ the mean on the service time and the following moments are irrelevant (this is
+ very different from the M/G/1 whose expected performance indeces depend on the
+ variance of the service time).
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> Ages of Jobs in the M/G/1/PS System</h3>
+<div class="outline-text-3" id="text-7-2">
+<blockquote>
+<p>
+The <b>age</b> of a job is the total service it has received so far. By definition, <b>0
+≤ age(j) ≤ size(j)</b>, where age(j) denotes the age of job j and size(j) denotes
+the (original) size of job j.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-7-3" class="outline-3">
+<h3 id="sec-7-3"><span class="section-number-3">7.3</span> Terminologies</h3>
+<div class="outline-text-3" id="text-7-3">
+<ul class="org-ul">
+<li>\(E[x]=\mu^{-1}\)
+</li>
+<li>\(N[x]=\) expected number of jobs with age <b>at most</b> \(x\)
+</li>
+<li>\(T[x]=\) expected time spent in the system by a <b>job of size x</b> (i.e. bigger or
+equal than x)
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-7-4" class="outline-3">
+<h3 id="sec-7-4"><span class="section-number-3">7.4</span> Expected response time</h3>
+<div class="outline-text-3" id="text-7-4">
+<p>
+We have the expected <b>conditioned</b> response time \[T[x]=\frac{x}{1-\rho}\] and
+the expected response time \[\overline{R}=E[R]=\frac{1}{\mu-\lambda}\] which
+is <b>the same of M/M/1 queue</b> (due to insensivity).
+</p>
+</div>
+</div>
+<div id="outline-container-sec-7-5" class="outline-3">
+<h3 id="sec-7-5"><span class="section-number-3">7.5</span> Conclusions about PS</h3>
+<div class="outline-text-3" id="text-7-5">
+<p>
+The expected slowdown for a job of size x under the M/G/1/PS is a constant,
+independent of the size x. Remember that for non-preemptive non-size-based
+scheduling, the mean slowdown for small jobs was greater than the mean slowdown
+for large jobs. By contrast, under PS, all jobs have same slowdown. For this
+reason, people always refer to PS as <b>fair scheduling</b>.
 </p>
 </div>
 </div>
@@ -667,7 +810,7 @@ i.e. response time - service time: \[E[W]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Pietro Visconti</p>
-<p class="date">Created: 2024-03-25 Mon 10:26</p>
+<p class="date">Created: 2024-03-25 Mon 11:12</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="http://orgmode.org">Org-mode</a> 9.7)</p>
 </div>
 </footer>

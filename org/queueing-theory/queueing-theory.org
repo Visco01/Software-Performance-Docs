@@ -178,27 +178,110 @@ $$\overline{N}=E[N]=\frac{\lambda}{\mu}$$
 $$\overline{R}=E[R]=\frac{1}{\mu}$$
 
 * M/G/1 queueing system
-An M/G/1 queue consists of a single server and queue with Poisson job arrivals (it holds the PASTA property),
-where the size (a.k.a. service time) of a job has a general distribution with *mean* $\frac{1}{\mu}$ and *variance* $\sigma^{2}$ and the stability condition is $\lambda < \mu$, as usual.
+An M/G/1 queue consists of a single server and queue with Poisson job arrivals
+(it holds the PASTA property), where the size (a.k.a. service time) of a job has
+a general distribution with *mean* $\frac{1}{\mu}$ and *variance* $\sigma^{2}$
+and the stability condition is $\lambda < \mu$, as usual.
 
-In the M/G/1 queue, the jobs are pushed in the waiting queue represented by an *infinite buffer*.
+In the M/G/1 queue, the jobs are pushed in the waiting queue represented by an
+*infinite buffer*.
 
 ** P-K Formula
-The formula states that the queue length (how many jobs are in the queue, waiting to be serviced?) depends not only on the ratio between
-the expected service time and the arrival rate, but also on the *variance* of the
-service time.
+The formula states that the queue length (how many jobs are in the queue,
+waiting to be serviced?) depends not only on the ratio between the expected
+service time and the arrival rate, but also on the *variance* of the service
+time.
 
 $$E[N_{q}]=\frac{\rho^{2}+\lambda^{2}\sigma^{2}}{2(1-\rho)}$$
 
-And we denote the average waiting time as $$E[W]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu-\lambda)}$$
+And we denote the average waiting time as
+$$E[W]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu-\lambda)}$$
 
-Since the numerator contains the variance, we can conclude that the average waiting time increases proportionally to the variance, i.e. *FCFS sucks with a great variance*.
+Since the numerator contains the variance, we can conclude that the average
+waiting time increases proportionally to the variance, i.e. *FCFS sucks with a
+great variance*.
 
 ** Expected number of customers
 $$\overline{N}=E[N]=\frac{\rho^{2}+\lambda^{2}\sigma^{2}}{2(1-\rho)}+\rho$$
 
 ** Expected response time
-$$\overline{R}=E[R]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu - \lambda)}+\frac{1}{\mu}$$
+$$\overline{R}=E[R]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu -
+\lambda)}+\frac{1}{\mu}$$
 
 ** Expected waiting time
-i.e. response time - service time: $$E[W]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu - \lambda)}$$
+i.e. response time - service time:
+$$E[W]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu - \lambda)}$$
+
+* M/G/1/PS queueing system (Processor Sharing policy)
+#+begin_quote
+A policy is *preemptive* if a job may be stopped partway through its execution
+and then resumed at a later point in time from the same point where it was
+stopped (this is also called preemptive-resume).
+#+end_quote
+
+The main problem with the M/G/1 queue is that the mean response time can be very
+high when $\sigma^{2}$ is high (job size variability is high). Intuitively,
+short jobs queue up behind long jobs, resulting in long delays.
+*Processor-Sharing*, by contrast, *is not negatively affected by high job size
+variability*.
+
+When a short job arrives, it immediately time-shares with all the jobs in the
+system. It does not have to wait for long jobs to finish. PS allows short jobs
+(which require just a few quanta of service) to get out quickly. time-sharing
+the CPU might allow an increase of overall system throughput in a multi-resource
+system. Imagine, for example, a multi-resource system, including a CPU, disk,
+memory, etc. It is useful to have many jobs running simultaneously (rather than
+just one job at a time), because jobs requiring different resources can be
+overlapped to increase throughput.
+
+#+begin_quote
+But PS is not better than FCFS for *every* arrival sequence:
+- If the service time has a *variance smaller than the exponential distribution*
+  with the same mean, then FCFS perfoms better than PS;
+- Otherwise, PS performs better;
+- If the *variance is not known*, it is better to opt for PS since it guarantees
+  the performance indices of the M/M/1 queue independently of the distribution
+  of the service time
+#+end_quote
+
+** Characteristics
+- *Poisson arrival process* with intensity $\lambda$
+- *General service time* with mean $\mu^{-1}$
+- *Single server*
+- Jobs enter in service as soon as they arrive but they share the processor with
+  the other job in service. In fact, each job receives the same amount of
+  computational power from the processor
+- The waiting time is defined as the difference between the response time and
+  the service time
+
+#+begin_quote
+*Insensitivity* of the M/G/1/PS queue: the performance indices depend only on
+ the mean on the service time and the following moments are irrelevant (this is
+ very different from the M/G/1 whose expected performance indeces depend on the
+ variance of the service time).
+#+end_quote
+
+** Ages of Jobs in the M/G/1/PS System
+#+begin_quote
+The *age* of a job is the total service it has received so far. By definition, *0
+≤ age(j) ≤ size(j)*, where age(j) denotes the age of job j and size(j) denotes
+the (original) size of job j.
+#+end_quote
+
+** Terminologies
+- $E[x]=\mu^{-1}$
+- $N[x]=$ expected number of jobs with age *at most* $x$
+- $T[x]=$ expected time spent in the system by a *job of size x* (i.e. bigger or
+  equal than x)
+
+** Expected response time
+  We have the expected *conditioned* response time $$T[x]=\frac{x}{1-\rho}$$ and
+  the expected response time $$\overline{R}=E[R]=\frac{1}{\mu-\lambda}$$ which
+  is *the same of M/M/1 queue* (due to insensivity).
+
+** Conclusions about PS
+The expected slowdown for a job of size x under the M/G/1/PS is a constant,
+independent of the size x. Remember that for non-preemptive non-size-based
+scheduling, the mean slowdown for small jobs was greater than the mean slowdown
+for large jobs. By contrast, under PS, all jobs have same slowdown. For this
+reason, people always refer to PS as *fair scheduling*.
