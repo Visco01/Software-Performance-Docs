@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>Queueing Theory</title>
-<!-- 2024-03-25 Mon 11:12 -->
+<!-- 2024-03-25 Mon 11:50 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -640,15 +640,6 @@ time.
 </p>
 
 <p>
-\[E[N_{q}]=\frac{\rho^{2}+\lambda^{2}\sigma^{2}}{2(1-\rho)}\]
-</p>
-
-<p>
-And we denote the average waiting time as
-\[E[W]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu-\lambda)}\]
-</p>
-
-<p>
 Since the numerator contains the variance, we can conclude that the average
 waiting time increases proportionally to the variance, i.e. <b>FCFS sucks with a
 great variance</b>.
@@ -677,7 +668,12 @@ great variance</b>.
 <div class="outline-text-3" id="text-6-4">
 <p>
 i.e. response time - service time:
-\[E[W]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu - \lambda)}\]
+\[E[W]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu - \lambda)}\] And, since
+\(\sigma^{2}=\frac{CV^{2}}{\mu^{2}}\), we compute
+\[E[W]=\frac{\rho+\lambda\mu\frac{CV^{2}}{\mu^{2}}}{2(\mu-\lambda)}\] Then, we
+eliminate the 2 \(\mu\) and we have
+\[E[W]=\frac{\rho+\frac{\lambda}{\mu}CV^{2}}{2(\mu-\lambda)}=\frac{\rho+\rho*CV^{2}}{2(\mu-\lambda)}=\frac{\rho(1+CV^{2})}{2(\mu-\lambda)}\]
+Where <b>CV is the variance</b>.
 </p>
 </div>
 </div>
@@ -763,9 +759,9 @@ the service time
 <div class="outline-text-3" id="text-7-2">
 <blockquote>
 <p>
-The <b>age</b> of a job is the total service it has received so far. By definition, <b>0
-≤ age(j) ≤ size(j)</b>, where age(j) denotes the age of job j and size(j) denotes
-the (original) size of job j.
+The <b>age</b> of a job is the total service it has received so far. By definition,
+<b>0 ≤ age(j) ≤ size(j)</b>, where age(j) denotes the age of job j and size(j)
+denotes the (original) size of job j.
 </p>
 </blockquote>
 </div>
@@ -810,7 +806,7 @@ reason, people always refer to PS as <b>fair scheduling</b>.
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Pietro Visconti</p>
-<p class="date">Created: 2024-03-25 Mon 11:12</p>
+<p class="date">Created: 2024-03-25 Mon 11:50</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 29.2 (<a href="http://orgmode.org">Org-mode</a> 9.7)</p>
 </div>
 </footer>

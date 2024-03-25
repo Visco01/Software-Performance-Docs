@@ -192,11 +192,6 @@ waiting to be serviced?) depends not only on the ratio between the expected
 service time and the arrival rate, but also on the *variance* of the service
 time.
 
-$$E[N_{q}]=\frac{\rho^{2}+\lambda^{2}\sigma^{2}}{2(1-\rho)}$$
-
-And we denote the average waiting time as
-$$E[W]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu-\lambda)}$$
-
 Since the numerator contains the variance, we can conclude that the average
 waiting time increases proportionally to the variance, i.e. *FCFS sucks with a
 great variance*.
@@ -210,7 +205,12 @@ $$\overline{R}=E[R]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu -
 
 ** Expected waiting time
 i.e. response time - service time:
-$$E[W]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu - \lambda)}$$
+$$E[W]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu - \lambda)}$$ And, since
+$\sigma^{2}=\frac{CV^{2}}{\mu^{2}}$, we compute
+$$E[W]=\frac{\rho+\lambda\mu\frac{CV^{2}}{\mu^{2}}}{2(\mu-\lambda)}$$ Then, we
+eliminate the 2 $\mu$ and we have
+$$E[W]=\frac{\rho+\frac{\lambda}{\mu}CV^{2}}{2(\mu-\lambda)}=\frac{\rho+\rho*CV^{2}}{2(\mu-\lambda)}=\frac{\rho(1+CV^{2})}{2(\mu-\lambda)}$$
+Where *CV is the variance*.
 
 * M/G/1/PS queueing system (Processor Sharing policy)
 #+begin_quote
@@ -263,9 +263,9 @@ But PS is not better than FCFS for *every* arrival sequence:
 
 ** Ages of Jobs in the M/G/1/PS System
 #+begin_quote
-The *age* of a job is the total service it has received so far. By definition, *0
-≤ age(j) ≤ size(j)*, where age(j) denotes the age of job j and size(j) denotes
-the (original) size of job j.
+The *age* of a job is the total service it has received so far. By definition,
+*0 ≤ age(j) ≤ size(j)*, where age(j) denotes the age of job j and size(j)
+denotes the (original) size of job j.
 #+end_quote
 
 ** Terminologies
