@@ -265,7 +265,7 @@ But PS is not better than FCFS for *every* arrival sequence:
 ** Ages of Jobs in the M/G/1/PS System
 #+begin_quote
 The *age* of a job is the total service it has received so far. By definition,
-*0 ≤ age(j) ≤ size(j)*, where age(j) denotes the age of job j and size(j)
+*0 <= age(j) <= size(j)*, where age(j) denotes the age of job j and size(j)
 denotes the (original) size of job j.
 #+end_quote
 
