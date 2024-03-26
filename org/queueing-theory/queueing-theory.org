@@ -1,6 +1,5 @@
 #+title: Queueing Theory
-#+LATEX_HEADER: \usepackage{amsmath}
-#+OPTIONS: tex:mathjax
+#+SETUPFILE: /Users/visco/.config/doom/latex-standard-setup.org
 
 Queueing theory is the theory behind what happens when you have lots of jobs,
 scarce resources, and subsequently long queues and delays. It is literally the
