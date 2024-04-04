@@ -1,0 +1,46 @@
+#+title:FCFS
+
+FCFS is a scheduling policy which consists of always choosing *the job at the head of the queue* to be served and running that job to completion.
+Intuitively, we can deduce that little jobs may potentially encounter bigger jobs ahead on the queue, and consequently would deal with huge slowdowns compared to their job sizes.
+
+For istance, let $A$ and $B$ be jobs with expected service times *1s* and *100s*, respectively.
+Assume that $A$ arrives immediatly before $B$. The FCFS policy will, of course, serve the $A$ job first and $B$ after.
+Given this background, let's compute the response times (waiting time + service time):
+$$R_{A} = 0s+1s=1s$$
+$$R_{B} = R_{A} + 100s = 101s$$
+Now, we can compute the mean response time as
+$$E[R] = \frac{R_{A}+R_{B}}{2}= \frac{1s+101s}{2}=51s$$
+This sounds like a pretty fair policy: given those job sizes, the mean response time is reasonable.
+
+Nevertheless, let's swap the positions in the queue: assume that $B$ arrives immediatly before $A$ and apply the same calculations:
+$$R_{B} = 0s + 100s=100s$$
+$$R_{A} = R_{B} + 1s = 101s$$
+And the mean response time turns out to be:
+$$E[R] = \frac{R_{A}+R_{B}}{2}= \frac{101s+100s}{2}=100.5s$$
+
+Compared to the firse example, *the mean response time is almost doubled*. We can deduce that FCFS policy is not fair in all cases and it requires some assumptions to work properly.
+
+One of those assumptions is the value of the *variance of the jobs' sizes* (or expected service times).
+In the previous examples, we saw a particular case in which the variance was extremely big and we came up with disappointing conclusions about this policy.
+Let's have one last example with $A$ and $B$ having sizes *5s* and *5s*, respectively, and the order by which they arrive in the queue is insignificant since the sizes are the same.
+The expected response times are:
+$$R_{A} = 0s + 5s=5s$$
+$$R_{B} = R_{A} + 5s = 10s$$
+And the mean response time is:
+$$E[R] = \frac{R_{A}+R_{B}}{2}= \frac{5s+10s}{2}=7.5s$$
+Notice that, in this case, *swapping the positions doesn't interfere at all on* $E[R]$. We can deduce that:
+
+#+begin_quote
+FCFS is a scheduling policy that works properly given this assumptions:
+1) *The job sizes are known in advance* (not always possible);
+2) *The variance related to the job sizes is equal or near 1*.
+#+end_quote
+
+Mathematically speaking, let's prove this statement by relying on the *P-K formula*.
+In a *M/G/1 queue*, the expected response time is equal to:
+$$\overline{R}=E[R]=\frac{\rho+\lambda\mu\sigma^{2}}{2(\mu -
+\lambda)}+\frac{1}{\mu}=\frac{\rho(1+CV^{2})}{2(\mu-\lambda)}+\frac{1}{\mu}$$
+
+In which the first element indicates the waiting time (the P-K formula, indeed) and $\frac{1}{\mu}$ is the service time.
+We can notice that $CV$ is exactly the vaiance that we mentioned before.
+Since it is on the numerator, huge values of variance would greatly increase the actual value of the waiting time and, by contrast, a variance near 1 would result as acceptable waiting time values.
