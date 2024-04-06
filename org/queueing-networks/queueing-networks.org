@@ -1,0 +1,130 @@
+#+title: Queueing Networks
+#+SETUPFILE: /Users/visco/.config/doom/latex-standard-setup.org
+
+When we model a complex system, it may be useful to combine different servers
+each of which is equipped with its queue and discipline. *Queueing networks are
+composed by several components* that give responses to the users and they are
+configured for different purposes or reasons:
+1) *Duplication of components* to improve scalability and reliability;
+2) A set of *heterogeneous components* having different functionalities that
+   interact one another.
+
+* Typologies of queueing networks
+
+** Open networks
+Open networks are a generalization of the queueing system described in the
+previous chapters: in fact, they are an open network with single station.
+
+The main characteristics of these systems are:
+- One or more arrival streams;
+- One or more departure streams;
+- The scalability is defined in terms of *Jobs/sec*;
+- Each station in the queueing network can have arrivals coming from other
+  stations;
+- Having a Poisson (or whatever) arrival process *doesn't* imply that the
+  incoming process of other stations is the same;
+- We assume that the capacity of each queue is infinite.
+
+*** Instability of open networks
+Here's the definition:
+#+begin_quote
+*Instability of open networks*: An open queueing network is unstable if, for
+ some initial state, the number of jobs in the network will, with positive
+ probability, go to infinity as time $t\rightarrow\infty$.
+#+end_quote
+
+In a *stable* open queueing network, for any sub-network, *the total flow
+incoming must be equal its throughput*.
+
+** Closed networks
+Closed queueing networks are characterised by a *fixed number of customers* that
+move among the system’s stations. There is not any arrival stream or departure.
+
+The main characteristics of these systems are:
+- They are *always stable*;
+- The users (or jobs) alternate a "thinking" and "submitting" phases;
+- The scalability is defined in terms of *#users* that interact with the
+  network;
+- They are more testable and practical compared to open networks;
+- Workload characterized by the number of jobs (level of multiprogramming).
+
+*** Further characterization of closed systems
+1) *Interactive systems*: obs have a thinking phase that is executed
+   independently;
+2) *Batch systems*: Thinking phase is null: jobs keep submitting without
+   waiting. It can be seen as the *worst case scenario* of Interactive systems.
+
+*** Classification in terms of Classes
+1) *Single Class system*: users are all statistically equivalent;
+2) *MultiClass systems*: users combined in different clusters, in which each
+   cluster has the same probability.
+
+
+** Analysis of Single Class Interactive Systems
+- $R$ *= Response Time* of the submitted state;
+- $Z$ *= Duration* of the thinking state;
+- $T=Z+R$ represents the *System State*.
+
+Moving to the averages and emphasizing the number of customers N:
+$$\overline{T}(N)=\overline{Z}+\overline{R}(N)$$
+
+By relying on the Little's Law, the *throughput* is defined as
+$$X(N)=\frac{N}{\overline{T}(N)}$$
+
+As a consequence, we can deduce that
+$$\overline{R}(N)=\frac{N}{X(N)}-\overline{Z}$$
+
+#+begin_quote
+In contrast with open networks (in which the throughput must be equal to the sum
+of the arrival rates), in closed queueing networks the *throughput depends both
+on the service rates and on the system population*.
+#+end_quote
+
+#+begin_quote
+*Routing*: It describes the way the jobs or customers move among the stations of
+ the network. A type of routing which is widely used in queueing networks is the
+ *probabilistic routing*: whenever a customer leaves a certain station, it
+ chooses among all the possible destinations (including the outside) in a
+ probabilistic way. This statement can be summarized thinking to a *Markov
+ Chain*.
+#+end_quote
+
+- $\overline{V}_{i}$ *= Relative Visit Ratio*. It is the expected number of
+  visits that a job performs at station $Q_{i}$ for each visit performed at a
+  reference station (i.e. the first station of the network). Clearly,
+  $\overline{V}_{1}=1$.
+
+  Given a probabilistic routing, we can obtain $\overline{V}_{i}$:
+  $$e_{i}=\lambda_{i}+\sum_{j=1}^Ke_{j}p_{ij}$$
+
+  Where:
+  - $e_{i}$ is the throughput of station $Q_{i}$;
+  - $\lambda_{i}$ is the incoming stream rate from the outside for station
+    $Q_{i}$.
+
+  Then, $$\overline{V}_{i}=\frac{e_{i}}{e_{1}}$$
+
+  Given these results, we state:
+  #+begin_quote
+  *Forced flow law*: For each queueing station of a network with $K$ stations
+  and station 1 as reference station, we have: $$X_{i}=\overline{V}_{i}X_{1}$$.
+  #+end_quote
+
+- $\overline{D}_{i}$ *= Service Demand*. It represents the *total amount of
+  service required by a customer to each station* for each visit it does at the
+  reference station.
+
+  It is important because it takes into account both the speed of a component and
+  the frequency that this is used.
+
+  It can be defined as:
+  $$\overline{D}_{i}=\overline{V}_{i}\frac{1}{\mu_{i}}$$
+
+  where $\frac{1}{\mu_{i}}$ is the average service time at station $i$ for each visit.
+
+  Finally, we can define the
+  #+begin_quote
+*Bottleneck Law*: the utilization of a queue is related to the throughput of the
+ reference station and the service demand.
+ $$\rho_{i}=X_{1}\frac{X_{i}}{\mu_{i}}=X_{1}\overline{D}_{i}$$
+  #+end_quote

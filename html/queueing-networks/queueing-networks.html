@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Queueing Networks</title>
+<!-- 2024-04-06 Sat 11:26 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Pietro Visconti">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script>
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: "center",
+  displayIndent: "2em",
+  messageStyle: "none",
+  "HTML-CSS": {
+    scale: 100,
+    styles: {
+      ".MathJax_Display": {
+        "font-size": "100%"
+      }
+    }
+  },
+  "SVG": {
+    scale: 100,
+    styles: {
+      ".MathJax_SVG_Display": {
+        "font-size": "100%",
+        "margin-left": "-2.281em"
+      }
+    }
+  }
+});
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"></script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Typologies of queueing networks</a>
+<ul class="nav">
+<li><a href="#sec-1-1">1.1. Open networks</a></li>
+<li><a href="#sec-1-2">1.2. Closed networks</a></li>
+<li><a href="#sec-1-3">1.3. Analysis of Single Class Interactive Systems</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Queueing Networks</h1>
+<p>
+When we model a complex system, it may be useful to combine different servers
+each of which is equipped with its queue and discipline. <b>Queueing networks are
+composed by several components</b> that give responses to the users and they are
+configured for different purposes or reasons:
+</p>
+<ol class="org-ol">
+<li><b>Duplication of components</b> to improve scalability and reliability;
+</li>
+<li>A set of <b>heterogeneous components</b> having different functionalities that
+interact one another.
+</li>
+</ol>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Typologies of queueing networks</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Open networks</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Open networks are a generalization of the queueing system described in the
+previous chapters: in fact, they are an open network with single station.
+</p>
+
+<p>
+The main characteristics of these systems are:
+</p>
+<ul class="org-ul">
+<li>One or more arrival streams;
+</li>
+<li>One or more departure streams;
+</li>
+<li>The scalability is defined in terms of <b>Jobs/sec</b>;
+</li>
+<li>Each station in the queueing network can have arrivals coming from other
+stations;
+</li>
+<li>Having a Poisson (or whatever) arrival process <b>doesn&rsquo;t</b> imply that the
+incoming process of other stations is the same;
+</li>
+<li>We assume that the capacity of each queue is infinite.
+</li>
+</ul>
+</div>
+<div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> Instability of open networks</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+Here&rsquo;s the definition:
+</p>
+<blockquote>
+<p>
+<b>Instability of open networks</b>: An open queueing network is unstable if, for
+ some initial state, the number of jobs in the network will, with positive
+ probability, go to infinity as time \(t\rightarrow\infty\).
+</p>
+</blockquote>
+
+<p>
+In a <b>stable</b> open queueing network, for any sub-network, <b>the total flow
+incoming must be equal its throughput</b>.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Closed networks</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Closed queueing networks are characterised by a <b>fixed number of customers</b> that
+move among the system’s stations. There is not any arrival stream or departure.
+</p>
+
+<p>
+The main characteristics of these systems are:
+</p>
+<ul class="org-ul">
+<li>They are <b>always stable</b>;
+</li>
+<li>The users (or jobs) alternate a &ldquo;thinking&rdquo; and &ldquo;submitting&rdquo; phases;
+</li>
+<li>The scalability is defined in terms of <b>#users</b> that interact with the
+network;
+</li>
+<li>They are more testable and practical compared to open networks;
+</li>
+<li>Workload characterized by the number of jobs (level of multiprogramming).
+</li>
+</ul>
+</div>
+<div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> Further characterization of closed systems</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<ol class="org-ol">
+<li><b>Interactive systems</b>: obs have a thinking phase that is executed
+independently;
+</li>
+<li><b>Batch systems</b>: Thinking phase is null: jobs keep submitting without
+waiting. It can be seen as the <b>worst case scenario</b> of Interactive systems.
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2"><span class="section-number-4">1.2.2</span> Classification in terms of Classes</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<ol class="org-ol">
+<li><b>Single Class system</b>: users are all statistically equivalent;
+</li>
+<li><b>MultiClass systems</b>: users combined in different clusters, in which each
+cluster has the same probability.
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Analysis of Single Class Interactive Systems</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li>\(R\) <b>= Response Time</b> of the submitted state;
+</li>
+<li>\(Z\) <b>= Duration</b> of the thinking state;
+</li>
+<li>\(T=Z+R\) represents the <b>System State</b>.
+</li>
+</ul>
+
+<p>
+Moving to the averages and emphasizing the number of customers N:
+\[\overline{T}(N)=\overline{Z}+\overline{R}(N)\]
+</p>
+
+<p>
+By relying on the Little&rsquo;s Law, the <b>throughput</b> is defined as
+\[X(N)=\frac{N}{\overline{T}(N)}\]
+</p>
+
+<p>
+As a consequence, we can deduce that
+\[\overline{R}(N)=\frac{N}{X(N)}-\overline{Z}\]
+</p>
+
+<blockquote>
+<p>
+In contrast with open networks (in which the throughput must be equal to the sum
+of the arrival rates), in closed queueing networks the <b>throughput depends both
+on the service rates and on the system population</b>.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>Routing</b>: It describes the way the jobs or customers move among the stations of
+ the network. A type of routing which is widely used in queueing networks is the
+ <b>probabilistic routing</b>: whenever a customer leaves a certain station, it
+ chooses among all the possible destinations (including the outside) in a
+ probabilistic way. This statement can be summarized thinking to a <b>Markov
+ Chain</b>.
+</p>
+</blockquote>
+
+<ul class="org-ul">
+<li>\(\overline{V}_{i}\) <b>= Relative Visit Ratio</b>. It is the expected number of
+visits that a job performs at station \(Q_{i}\) for each visit performed at a
+reference station (i.e. the first station of the network). Clearly,
+\(\overline{V}_{1}=1\).
+
+<p>
+Given a probabilistic routing, we can obtain \(\overline{V}_{i}\):
+\[e_{i}=\lambda_{i}+\sum_{j=1}^Ke_{j}p_{ij}\]
+</p>
+
+<p>
+Where:
+</p>
+<ul class="org-ul">
+<li>\(e_{i}\) is the throughput of station \(Q_{i}\);
+</li>
+<li>\(\lambda_{i}\) is the incoming stream rate from the outside for station
+\(Q_{i}\).
+</li>
+</ul>
+
+<p>
+Then, \[\overline{V}_{i}=\frac{e_{i}}{e_{1}}\]
+</p>
+
+<p>
+Given these results, we state:
+</p>
+<blockquote>
+<p>
+<b>Forced flow law</b>: For each queueing station of a network with \(K\) stations
+and station 1 as reference station, we have: \[X_{i}=\overline{V}_{i}X_{1}\].
+</p>
+</blockquote>
+</li>
+
+<li>\(\overline{D}_{i}\) <b>= Service Demand</b>. It represents the <b>total amount of
+service required by a customer to each station</b> for each visit it does at the
+reference station.
+
+<p>
+It is important because it takes into account both the speed of a component and
+the frequency that this is used.
+</p>
+
+<p>
+It can be defined as:
+\[\overline{D}_{i}=\overline{V}_{i}\frac{1}{\mu_{i}}\]
+</p>
+
+<p>
+where \(\frac{1}{\mu_{i}}\) is the average service time at station \(i\) for each visit.
+</p>
+
+<p>
+Finally, we can define the
+</p>
+<blockquote>
+<p>
+<b>Bottleneck Law</b>: the utilization of a queue is related to the throughput of the
+ reference station and the service demand.
+ \[\rho_{i}=X_{1}\frac{X_{i}}{\mu_{i}}=X_{1}\overline{D}_{i}\]
+</p>
+</blockquote>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Pietro Visconti</p>
+<p class="date">Created: 2024-04-06 Sat 11:26</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 29.3 (<a href="http://orgmode.org">Org-mode</a> 9.7)</p>
+</div>
+</footer>
+</body>
+</html>
