@@ -2,4 +2,5 @@
 
 * [[file:intro/intro.org][Basics, Little's Law, PASTA]]
 * [[file:queueing-theory/queueing-theory.org][Queueing Theory]]
+* [[file:queueing-networks/queueing-networks.org][Queueing Networks]]
 * [[file:references.org][References]]
