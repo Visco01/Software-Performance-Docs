@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>Queueing Networks</title>
-<!-- 2024-04-06 Sat 11:26 -->
+<!-- 2024-05-06 Mon 11:53 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -225,9 +225,18 @@ MathJax.Hub.Config({
 <ul class="nav">
 <li><a href="#sec-1-1">1.1. Open networks</a></li>
 <li><a href="#sec-1-2">1.2. Closed networks</a></li>
-<li><a href="#sec-1-3">1.3. Analysis of Single Class Interactive Systems</a></li>
 </ul>
 </li>
+<li><a href="#sec-2">2. Analysis of Single Class Interactive Systems</a></li>
+<li><a href="#sec-3">3. Burke&rsquo;s Theorem</a></li>
+<li><a href="#sec-4">4. Jackson&rsquo;s Networks</a>
+<ul class="nav">
+<li><a href="#sec-4-1">4.1. Characteristics</a></li>
+<li><a href="#sec-4-2">4.2. Arrival rate at each station</a></li>
+<li><a href="#sec-4-3">4.3. The Jackson&rsquo;s theorem</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. Burke&rsquo;s VS Jackson&rsquo;s theorems</a></li>
 </ul>
 </div>
 </nav>
@@ -348,9 +357,10 @@ cluster has the same probability.
 </div>
 </div>
 </div>
-<div id="outline-container-sec-1-3" class="outline-3">
-<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Analysis of Single Class Interactive Systems</h3>
-<div class="outline-text-3" id="text-1-3">
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Analysis of Single Class Interactive Systems</h2>
+<div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li>\(R\) <b>= Response Time</b> of the submitted state;
 </li>
@@ -463,11 +473,134 @@ Finally, we can define the
 </ul>
 </div>
 </div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Burke&rsquo;s Theorem</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Considering a tandem of <b>M/M/1</b> and <b>?/M/1</b> queues, Can we characterise the
+stochastic process of the arrivals at the second queue? (i.e. Is it still a
+Poisson process? Is it independent of the arrival process?).
+</p>
+
+<blockquote>
+<p>
+<b>Burke&rsquo;s Theorem</b>: In steady-state (\(t\rightarrow\infty\)) the <b>departure process
+ of a M/M/m queue</b> is:
+</p>
+<ol class="org-ol">
+<li>A Poisson process;
+</li>
+<li>With intensity equal to \(\lambda\);
+</li>
+<li>At any given time, the number of jobs in the system is independent of the
+departure process from the the first queue prior to that time
+</li>
+</ol>
+</blockquote>
+
+<p>
+Answering the questions provided above, the second queue behaves exactly <b>as an
+isolated M/M/m queue</b>, and the performance indices can be derived as if the
+queues were isolated.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Jackson&rsquo;s Networks</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+This architecture allows for any <b>number of servers</b>, each with <b>its own
+(unbounded) queue</b>, and <b>probabilistic routing between the servers</b>. The
+architecture allows for cycles in the network and is very useful in modeling
+packet-routing computer networks or networks of manufacturing stations.
+</p>
+</div>
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Characteristics</h3>
+<div class="outline-text-3" id="text-4-1">
+<ul class="org-ul">
+<li>\(N\) queues interconnected;
+</li>
+<li>Open systems
+<ol class="org-ol">
+<li>Independent Poisson arrivals with rate \(\lambda_{i}\) at station \(i\);
+</li>
+<li>Departures from some queues.
+</li>
+</ol>
+</li>
+<li>Probabilistic routing between the queues
+<ol class="org-ol">
+<li>Given a job serviced in station \(i\), the probability of being sent to station \(j\) is \(p_{ij}\);
+</li>
+<li>With probability \(p_{i0}\) the job leaves the system;
+</li>
+<li><b>Cycles are allowed</b>;
+</li>
+<li>\(\sum_{j=0}^Np_{ij}=1\)
+</li>
+</ol>
+</li>
+<li>\(?/M/c\) queues;
+</li>
+<li>Due to the cycles, <b>arrival processes are not Poissons</b>.
+<img src="../../resources/jackson-network.png" class="img-responsive" alt="jackson-network.png">
+</li>
+</ul>
+
+<p>
+The <b>response time of a job</b> is defined as the time from when the job arrives to the network until it leaves the network, including possibly visiting the same server or different servers multiple times.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Arrival rate at each station</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Assuming the stability condition on each station, we can compute the arrival rate \(e_{i}\) for each of them through the <b>traffic equations</b>.
+\[e_{i}=\sum_{j=1}^{N}e_{j}p_{ij}+\lambda_{i}\]
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> The Jackson&rsquo;s theorem</h3>
+<div class="outline-text-3" id="text-4-3">
+<blockquote>
+<p>
+Let \(n=(n_{1}, ..., n_{N})\) be the state of the model, where \(n_{i}\) is the number of jobs at station \(i\).
+</p>
+
+<p>
+The steady-state distribution \(\pi(n)\) can be computed:
+\[\pi(n)=\prod_{i=1}^{N}\pi_{i}(n_{i})\]
+</p>
+
+<p>
+where \(\pi_{i}(n_{i})\) is the teady-state distribution of station i <b>as if</b> it is subject to a Poisson arrival process with intensity \(e_{i}\).
+</p>
+
+<p>
+The network is stable <b>if and only if</b> each station considered in isolation is stable.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Burke&rsquo;s VS Jackson&rsquo;s theorems</h2>
+<div class="outline-text-2" id="text-5">
+<ol class="org-ol">
+<li><b>Burke’s</b> theorem states that the arrival process at the second queue is a Poisson process independent from the arrival process at the first queue.
+</li>
+<li><b>Jackson’s</b> theorem states that the steady-state distribution does not change if we replace the arrival processes at the queues with independent Poisson processes.
+</li>
+</ol>
+</div>
 </div>
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Pietro Visconti</p>
-<p class="date">Created: 2024-04-06 Sat 11:26</p>
+<p class="date">Created: 2024-05-06 Mon 11:53</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 29.3 (<a href="http://orgmode.org">Org-mode</a> 9.7)</p>
 </div>
 </footer>

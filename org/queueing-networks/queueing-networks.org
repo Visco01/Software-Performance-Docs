@@ -60,7 +60,7 @@ The main characteristics of these systems are:
    cluster has the same probability.
 
 
-** Analysis of Single Class Interactive Systems
+* Analysis of Single Class Interactive Systems
 - $R$ *= Response Time* of the submitted state;
 - $Z$ *= Duration* of the thinking state;
 - $T=Z+R$ represents the *System State*.
@@ -128,3 +128,63 @@ on the service rates and on the system population*.
  reference station and the service demand.
  $$\rho_{i}=X_{1}\frac{X_{i}}{\mu_{i}}=X_{1}\overline{D}_{i}$$
   #+end_quote
+
+* Burke's Theorem
+Considering a tandem of *M/M/1* and *?/M/1* queues, Can we characterise the
+stochastic process of the arrivals at the second queue? (i.e. Is it still a
+Poisson process? Is it independent of the arrival process?).
+
+#+begin_quote
+*Burke's Theorem*: In steady-state ($t\rightarrow\infty$) the *departure process
+ of a M/M/m queue* is:
+1) A Poisson process;
+2) With intensity equal to $\lambda$;
+3) At any given time, the number of jobs in the system is independent of the
+   departure process from the the first queue prior to that time
+#+end_quote
+
+Answering the questions provided above, the second queue behaves exactly *as an
+isolated M/M/m queue*, and the performance indices can be derived as if the
+queues were isolated.
+
+* Jackson's Networks
+This architecture allows for any *number of servers*, each with *its own
+(unbounded) queue*, and *probabilistic routing between the servers*. The
+architecture allows for cycles in the network and is very useful in modeling
+packet-routing computer networks or networks of manufacturing stations.
+
+** Characteristics
+- $N$ queues interconnected;
+- Open systems
+  1) Independent Poisson arrivals with rate $\lambda_{i}$ at station $i$;
+  2) Departures from some queues.
+- Probabilistic routing between the queues
+  1) Given a job serviced in station $i$, the probability of being sent to station $j$ is $p_{ij}$;
+  2) With probability $p_{i0}$ the job leaves the system;
+  3) *Cycles are allowed*;
+  4) $\sum_{j=0}^Np_{ij}=1$
+- $?/M/c$ queues;
+- Due to the cycles, *arrival processes are not Poissons*.
+  [[../../resources/jackson-network.png]]
+
+The *response time of a job* is defined as the time from when the job arrives to the network until it leaves the network, including possibly visiting the same server or different servers multiple times.
+
+** Arrival rate at each station
+Assuming the stability condition on each station, we can compute the arrival rate $e_{i}$ for each of them through the *traffic equations*.
+$$e_{i}=\sum_{j=1}^{N}e_{j}p_{ij}+\lambda_{i}$$
+
+** The Jackson's theorem
+#+begin_quote
+Let $n=(n_{1}, ..., n_{N})$ be the state of the model, where $n_{i}$ is the number of jobs at station $i$.
+
+The steady-state distribution $\pi(n)$ can be computed:
+$$\pi(n)=\prod_{i=1}^{N}\pi_{i}(n_{i})$$
+
+where $\pi_{i}(n_{i})$ is the teady-state distribution of station i *as if* it is subject to a Poisson arrival process with intensity $e_{i}$.
+
+The network is stable *if and only if* each station considered in isolation is stable.
+#+end_quote
+
+* Burke's VS Jackson's theorems
+1) *Burke’s* theorem states that the arrival process at the second queue is a Poisson process independent from the arrival process at the first queue.
+2) *Jackson’s* theorem states that the steady-state distribution does not change if we replace the arrival processes at the queues with independent Poisson processes.
