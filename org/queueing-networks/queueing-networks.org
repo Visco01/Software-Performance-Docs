@@ -242,3 +242,42 @@ The steady-state distribution seen by a customer immediately before its arrival
 at a queue is $\pi_{K-1}(n)$, i.e., *the steady-state distribution of the network with
 itself removed from it*.
 #+end_quote
+
+* BCMP networks
+They represent the most widely used queueing networks.
+- *BCMP consider multiple classes of customers*
+- Customer classes are grouped into chains
+- Scheduling discipline may be *FCFS*, *Processor Sharing* (PS), *Infinite Servers*
+  (IS), *LCFSPR* (Last Come First Served with Preemptive Resume)
+- Topology can be closed, open or mixed
+- Service time can be generally distributed for all the queueing disciplines
+  with the exception of the FCFS
+
+** Scheduling policies
+1) *FCFS*: the service time must be exponentially distributed and the mean must
+  be the same for all the classes. The total computational power may depend on
+  the number of customers in the queue (e.g., single service, multiple servers).
+2) *PS*:approximates the round robin, general distribution, the expected service
+   time can be different for different classes. The total computational rate may
+   depend on the total number of customers in the queue.
+3) *LCFPR*: general distribution, the expected service time can be different for
+   different classes. The total computational rate may depend on the total
+   number of customers in the queue.
+4) *IS*: Delay stations, useful to model the thinking time. General
+   distribution, the expected service time can be different for different
+   classes. The total computational rate may depend on the total number of
+   customers in the queue.
+
+** Classes
+Classes are a local property of the station: We can imagine them as *access
+points to the station* (i.e. API endpoints?). The routing has to be specified
+between classes at stations.
+
+[[../../resources/BCMP.png]]
+
+** Chains
+A chain in the network is a cluster of classes. Customers can move withing the
+classes inside the same chain, but cannot move from one chain to another.
+The chain can be:
+- *Open*: customers arrive at and leave from the system;
+- *Closed*: the total population of the chain is fixed.

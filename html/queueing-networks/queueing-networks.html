@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>Queueing Networks</title>
-<!-- 2024-06-10 Mon 11:06 -->
+<!-- 2024-06-10 Mon 11:29 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -244,6 +244,13 @@ MathJax.Hub.Config({
 <li><a href="#sec-6-3">6.3. Gordon-Newell theorem</a></li>
 <li><a href="#sec-6-4">6.4. Gordon-Newell VS Jackson theorems</a></li>
 <li><a href="#sec-6-5">6.5. Arrival theorem</a></li>
+</ul>
+</li>
+<li><a href="#sec-7">7. BCMP networks</a>
+<ul class="nav">
+<li><a href="#sec-7-1">7.1. Scheduling policies</a></li>
+<li><a href="#sec-7-2">7.2. Classes</a></li>
+<li><a href="#sec-7-3">7.3. Chains</a></li>
 </ul>
 </li>
 </ul>
@@ -718,10 +725,88 @@ itself removed from it</b>.
 </div>
 </div>
 </div>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> BCMP networks</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+They represent the most widely used queueing networks.
+</p>
+<ul class="org-ul">
+<li><b>BCMP consider multiple classes of customers</b>
+</li>
+<li>Customer classes are grouped into chains
+</li>
+<li>Scheduling discipline may be <b>FCFS</b>, <b>Processor Sharing</b> (PS), <b>Infinite Servers</b>
+(IS), <b>LCFSPR</b> (Last Come First Served with Preemptive Resume)
+</li>
+<li>Topology can be closed, open or mixed
+</li>
+<li>Service time can be generally distributed for all the queueing disciplines
+with the exception of the FCFS
+</li>
+</ul>
+</div>
+<div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Scheduling policies</h3>
+<div class="outline-text-3" id="text-7-1">
+<ol class="org-ol">
+<li><b>FCFS</b>: the service time must be exponentially distributed and the mean must
+be the same for all the classes. The total computational power may depend on
+the number of customers in the queue (e.g., single service, multiple servers).
+</li>
+<li><b>PS</b>:approximates the round robin, general distribution, the expected service
+time can be different for different classes. The total computational rate may
+depend on the total number of customers in the queue.
+</li>
+<li><b>LCFPR</b>: general distribution, the expected service time can be different for
+different classes. The total computational rate may depend on the total
+number of customers in the queue.
+</li>
+<li><b>IS</b>: Delay stations, useful to model the thinking time. General
+distribution, the expected service time can be different for different
+classes. The total computational rate may depend on the total number of
+customers in the queue.
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> Classes</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+Classes are a local property of the station: We can imagine them as <b>access
+points to the station</b> (i.e. API endpoints?). The routing has to be specified
+between classes at stations.
+</p>
+
+
+<figure>
+<p><img src="../../resources/BCMP.png" class="img-responsive" alt="BCMP.png">
+</p>
+</figure>
+</div>
+</div>
+<div id="outline-container-sec-7-3" class="outline-3">
+<h3 id="sec-7-3"><span class="section-number-3">7.3</span> Chains</h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+A chain in the network is a cluster of classes. Customers can move withing the
+classes inside the same chain, but cannot move from one chain to another.
+The chain can be:
+</p>
+<ul class="org-ul">
+<li><b>Open</b>: customers arrive at and leave from the system;
+</li>
+<li><b>Closed</b>: the total population of the chain is fixed.
+</li>
+</ul>
+</div>
+</div>
+</div>
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Pietro Visconti</p>
-<p class="date">Created: 2024-06-10 Mon 11:06</p>
+<p class="date">Created: 2024-06-10 Mon 11:29</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 29.3 (<a href="http://orgmode.org">Org-mode</a> 9.7)</p>
 </div>
 </footer>
