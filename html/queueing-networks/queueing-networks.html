@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>Queueing Networks</title>
-<!-- 2024-05-06 Mon 12:08 -->
+<!-- 2024-06-10 Mon 11:06 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -237,6 +237,15 @@ MathJax.Hub.Config({
 </ul>
 </li>
 <li><a href="#sec-5">5. Burke&rsquo;s VS Jackson&rsquo;s theorems</a></li>
+<li><a href="#sec-6">6. Gordon-Newell&rsquo;s networks</a>
+<ul class="nav">
+<li><a href="#sec-6-1">6.1. Key features</a></li>
+<li><a href="#sec-6-2">6.2. Traffic equations</a></li>
+<li><a href="#sec-6-3">6.3. Gordon-Newell theorem</a></li>
+<li><a href="#sec-6-4">6.4. Gordon-Newell VS Jackson theorems</a></li>
+<li><a href="#sec-6-5">6.5. Arrival theorem</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </nav>
@@ -597,10 +606,122 @@ The network is stable <b>if and only if</b> each station considered in isolation
 </ol>
 </div>
 </div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Gordon-Newell&rsquo;s networks</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Key features</h3>
+<div class="outline-text-3" id="text-6-1">
+<ul class="org-ul">
+<li>\(N\) queues interconnected;
+</li>
+<li>No arrivals from the outside or departures (closed network)
+</li>
+<li>Probabilistic routing
+</li>
+<li>Fixed number of customers \(K\)
+</li>
+<li>Each queue has exponentially distributed service time with single or multiple
+servers
+</li>
+<li>The <b>routing is irreducible</b>: from every queue it must be possible to reach
+every other queue.
+</li>
+</ul>
+
+
+<figure>
+<p><img src="../../resources/gordon-newell.png" class="img-responsive" alt="gordon-newell.png">
+</p>
+</figure>
+</div>
+</div>
+<div id="outline-container-sec-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Traffic equations</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+\[e_{i}=\sum_{j=1}^{N}e_{j}p_{ij}\]
+</p>
+</div>
+</div>
+<div id="outline-container-sec-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="section-number-3">6.3</span> Gordon-Newell theorem</h3>
+<div class="outline-text-3" id="text-6-3">
+<blockquote>
+<ol class="org-ol">
+<li>A <b>closed queueing network</b> with \(N\) stations
+</li>
+<li>Independent and <b>exponentially distributed</b> service times
+</li>
+<li><b>Irreducible</b> and <b>probabilistic</b> routing
+</li>
+</ol>
+<p>
+has product-form steady-state distribution
+\[\pi(n)=\frac{1}{G_{k}}\prod_{i=1}^{N}g_{i}(n_{i})\]
+</p>
+
+<p>
+where:
+</p>
+<ul class="org-ul">
+<li>\(G_{k}\) is the normalising constant, i.e., it ensures that the sum of the
+probabilities gives 1;
+</li>
+<li>\(K\) is the network population;
+</li>
+<li>\(g_{i}(n_{i})\) is the steady-state distribution of station \(i\) as if the arrival
+rate is Poisson with rate \(e_{i}\) and finite population \(K\).
+</li>
+</ul>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-6-4" class="outline-3">
+<h3 id="sec-6-4"><span class="section-number-3">6.4</span> Gordon-Newell VS Jackson theorems</h3>
+<div class="outline-text-3" id="text-6-4">
+<ul class="org-ul">
+<li>Gordon-Newell theorem states that we can <b>replace the arrival process at the
+queues with a Poisson process when we are in steady-state</b>.
+</li>
+<li>Differently from the Jackson’s theorem we have to compute the normalising
+constant which <b>depends on K</b> and on the solution of the <b>traffic equations</b> that
+we have chosen;
+</li>
+<li>The computation of the normalising constant cannot be done by brute force
+because of the state space explosion.
+</li>
+<li><b>PASTA property can be applied only to open networks</b>.
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-6-5" class="outline-3">
+<h3 id="sec-6-5"><span class="section-number-3">6.5</span> Arrival theorem</h3>
+<div class="outline-text-3" id="text-6-5">
+<ul class="org-ul">
+<li>Given a Gordon-Newell queueing network
+</li>
+<li>Let \(\pi_{K}(n)\) the steady-state distribution of the network with K jobs
+</li>
+<li>Imagine to freeze the state immediately after the departure of a customer from
+a queue and immediately before its arrival at the destination queue:
+</li>
+</ul>
+<blockquote>
+<p>
+The steady-state distribution seen by a customer immediately before its arrival
+at a queue is \(\pi_{K-1}(n)\), i.e., <b>the steady-state distribution of the network with
+itself removed from it</b>.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Pietro Visconti</p>
-<p class="date">Created: 2024-05-06 Mon 12:08</p>
+<p class="date">Created: 2024-06-10 Mon 11:06</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 29.3 (<a href="http://orgmode.org">Org-mode</a> 9.7)</p>
 </div>
 </footer>

@@ -188,3 +188,57 @@ The network is stable *if and only if* each station considered in isolation is s
 * Burke's VS Jackson's theorems
 1) *Burke’s* theorem states that the arrival process at the second queue is a Poisson process independent from the arrival process at the first queue.
 2) *Jackson’s* theorem states that the steady-state distribution does not change if we replace the arrival processes at the queues with independent Poisson processes.
+
+* Gordon-Newell's networks
+
+** Key features
+- $N$ queues interconnected;
+- No arrivals from the outside or departures (closed network)
+- Probabilistic routing
+- Fixed number of customers $K$
+- Each queue has exponentially distributed service time with single or multiple
+  servers
+- The *routing is irreducible*: from every queue it must be possible to reach
+  every other queue.
+
+[[../../resources/gordon-newell.png]]
+
+** Traffic equations
+$$e_{i}=\sum_{j=1}^{N}e_{j}p_{ij}$$
+
+** Gordon-Newell theorem
+#+begin_quote
+1) A *closed queueing network* with $N$ stations
+2) Independent and *exponentially distributed* service times
+3) *Irreducible* and *probabilistic* routing
+has product-form steady-state distribution
+$$\pi(n)=\frac{1}{G_{k}}\prod_{i=1}^{N}g_{i}(n_{i})$$
+
+where:
+- $G_{k}$ is the normalising constant, i.e., it ensures that the sum of the
+  probabilities gives 1;
+- $K$ is the network population;
+- $g_{i}(n_{i})$ is the steady-state distribution of station $i$ as if the arrival
+  rate is Poisson with rate $e_{i}$ and finite population $K$.
+#+end_quote
+
+** Gordon-Newell VS Jackson theorems
+- Gordon-Newell theorem states that we can *replace the arrival process at the
+  queues with a Poisson process when we are in steady-state*.
+- Differently from the Jackson’s theorem we have to compute the normalising
+  constant which *depends on K* and on the solution of the *traffic equations* that
+  we have chosen;
+- The computation of the normalising constant cannot be done by brute force
+  because of the state space explosion.
+- *PASTA property can be applied only to open networks*.
+
+** Arrival theorem
+- Given a Gordon-Newell queueing network
+- Let $\pi_{K}(n)$ the steady-state distribution of the network with K jobs
+- Imagine to freeze the state immediately after the departure of a customer from
+  a queue and immediately before its arrival at the destination queue:
+#+begin_quote
+The steady-state distribution seen by a customer immediately before its arrival
+at a queue is $\pi_{K-1}(n)$, i.e., *the steady-state distribution of the network with
+itself removed from it*.
+#+end_quote
